@@ -26,3 +26,7 @@ json反序列化时调用此构造函数.
 
 ## Preconditions.checkNotNull
 
+# joda-time库
+
+joda time这个库的时间操作。
+
