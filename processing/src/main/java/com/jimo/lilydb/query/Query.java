@@ -6,6 +6,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Ordering;
 import com.jimo.lilydb.guice.ExtensionPoint;
+import com.jimo.lilydb.java.util.common.granularity.Granularity;
 import com.jimo.lilydb.query.spec.QuerySegmentSpec;
 import com.jimo.lilydb.query.timeseries.TimeseriesQuery;
 import com.jimo.lilydb.segment.VirtualColumns;
@@ -51,6 +52,8 @@ public interface Query<T> {
     List<Interval> getIntervals();
 
     Duration getDuration();
+
+    Granularity getGranularity();
 
     DateTimeZone getTimezone();
 
