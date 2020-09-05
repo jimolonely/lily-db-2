@@ -24,4 +24,12 @@ public class StringUtils {
             return bob.toString();
         }
     }
+
+    public static String toLowerCase(String name) {
+        return name.toLowerCase(Locale.ENGLISH);
+    }
+
+    public static String toUpperCase(String name) {
+        return name.toUpperCase(Locale.ENGLISH);
+    }
 }

@@ -21,4 +21,8 @@ public class VirtualColumns {
     ) {
 
     }
+
+    public static VirtualColumns nullToEmpty(VirtualColumns virtualColumns) {
+        return virtualColumns == null ? EMPTY : virtualColumns;
+    }
 }
