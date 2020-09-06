@@ -18,6 +18,7 @@ import org.joda.time.Interval;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 /**
  * @author jimo
@@ -90,6 +91,19 @@ public abstract class BaseQuery<T> implements Query<T> {
         return DataSourceAnalysis.forDataSource(query.getDataSource())
                 .getBaseQuerySegmentSpec()
                 .orElseGet(query::getQuerySegmentSpec);
+    }
+
+    public static Map<String, Object> computeOverriddenContext(
+            final Map<String, Object> context,
+            final Map<String, Object> overrides
+    ) {
+        Map<String, Object> overridden = new TreeMap<>();
+        if (context != null) {
+            overridden.putAll(context);
+        }
+        overridden.putAll(overrides);
+
+        return overridden;
     }
 
     @Override

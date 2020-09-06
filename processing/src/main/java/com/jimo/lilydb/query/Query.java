@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Ordering;
 import com.jimo.lilydb.guice.ExtensionPoint;
 import com.jimo.lilydb.java.util.common.granularity.Granularity;
+import com.jimo.lilydb.query.filter.DimFilter;
 import com.jimo.lilydb.query.spec.QuerySegmentSpec;
 import com.jimo.lilydb.query.timeseries.TimeseriesQuery;
 import com.jimo.lilydb.segment.VirtualColumns;
@@ -117,4 +118,6 @@ public interface Query<T> {
     default VirtualColumns getVirtualColumns() {
         return VirtualColumns.EMPTY;
     }
+
+    DimFilter getFilter();
 }

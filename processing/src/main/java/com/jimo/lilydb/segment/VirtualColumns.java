@@ -25,4 +25,8 @@ public class VirtualColumns {
     public static VirtualColumns nullToEmpty(VirtualColumns virtualColumns) {
         return virtualColumns == null ? EMPTY : virtualColumns;
     }
+
+    public static VirtualColumn create(List<VirtualColumn> columns) {
+        return null;
+    }
 }

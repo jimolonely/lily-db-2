@@ -7,9 +7,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Ordering;
 import com.jimo.lilydb.java.util.common.StringUtils;
 import com.jimo.lilydb.java.util.common.UOE;
-import com.jimo.lilydb.java.util.common.granularity.Granularity;
 import com.jimo.lilydb.query.BaseQuery;
 import com.jimo.lilydb.query.DataSource;
+import com.jimo.lilydb.query.Druids;
 import com.jimo.lilydb.query.Query;
 import com.jimo.lilydb.query.filter.DimFilter;
 import com.jimo.lilydb.query.spec.QuerySegmentSpec;
@@ -88,9 +88,7 @@ public class ScanQuery extends BaseQuery<ScanResultValue> {
 
     @JsonCreator
     public ScanQuery(DataSource dataSource,
-                     boolean descending,
                      Map<String, Object> context, QuerySegmentSpec spec,
-                     Granularity granularity,
                      VirtualColumns virtualColumns,
                      ResultFormat resultFormat,
                      int batchSize,
@@ -98,9 +96,7 @@ public class ScanQuery extends BaseQuery<ScanResultValue> {
                      DimFilter dimFilter,
                      List<String> columns,
                      Boolean legacy,
-                     Order order,
-                     Integer maxRowsQueuedForOrdering,
-                     Integer maxSegmentPartitionsOrderedInMemory) {
+                     Order order) {
         super(dataSource, false, context, spec);
         this.virtualColumns = VirtualColumns.nullToEmpty(virtualColumns);
         this.resultFormat = resultFormat == null ? ResultFormat.RESULT_FORMAT_LIST : resultFormat;
@@ -185,6 +181,11 @@ public class ScanQuery extends BaseQuery<ScanResultValue> {
     }
 
     @Override
+    public DimFilter getFilter() {
+        return dimFilter;
+    }
+
+    @Override
     public String getType() {
         return SCAN;
     }
@@ -199,16 +200,16 @@ public class ScanQuery extends BaseQuery<ScanResultValue> {
 
     @Override
     public Query<ScanResultValue> withOverriddenContext(Map<String, Object> contextOverride) {
-        return null;
+        return Druids.ScanQueryBuilder.copy(this).context(computeOverriddenContext(getContext(), contextOverride)).build();
     }
 
     @Override
     public Query<ScanResultValue> withQuerySegmentSpec(QuerySegmentSpec spec) {
-        return null;
+        return Druids.ScanQueryBuilder.copy(this).intervals(spec).build();
     }
 
     @Override
     public Query<ScanResultValue> withDataSource(DataSource dataSource) {
-        return null;
+        return Druids.ScanQueryBuilder.copy(this).dataSource(dataSource).build();
     }
 }
